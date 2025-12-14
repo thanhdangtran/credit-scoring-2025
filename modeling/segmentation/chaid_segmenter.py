@@ -477,7 +477,9 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
                     parent_id=node_id,
                     split_values=category_group
                 )
-                child_node.split_feature = feature
+                # Store which feature value(s) led to this child
+                # (split_feature on child refers to PARENT's split feature for traversal)
+                child_node.parent_split_feature = feature
                 node.children.append(child_node)
 
         # If no valid children, make this a leaf
@@ -804,15 +806,25 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
         if node.is_leaf or len(node.children) == 0:
             return node
 
+        # Use this node's split_feature to determine which feature to check
         feature = node.split_feature
+        if feature is None:
+            return node
+
         value = row[feature]
 
-        # Find matching child
-        for child in node.children:
-            if child.split_values is not None and value in child.split_values:
-                return self._traverse_tree(row, child)
+        # Convert to string for consistent comparison (handles Categorical types)
+        value_str = str(value) if pd.notna(value) else '_MISSING_'
 
-        # If no match (shouldn't happen), return current node
+        # Find matching child based on split_values
+        for child in node.children:
+            if child.split_values is not None:
+                # Convert split_values to strings for comparison
+                split_values_str = [str(v) for v in child.split_values]
+                if value_str in split_values_str:
+                    return self._traverse_tree(row, child)
+
+        # If no match, return current node (shouldn't happen with proper tree)
         return node
 
     def _get_all_leaves(self, node: CHAIDNode) -> List[CHAIDNode]:

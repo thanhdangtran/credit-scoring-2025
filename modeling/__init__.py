@@ -25,10 +25,26 @@ from .preprocessing import (
 )
 
 from .segmentation import (
+    # CHAID
     CHAIDNode,
     SegmentProfile,
     CHAIDSegmenter,
     VietnameseCreditSegmenter,
+    # CART
+    CARTNode,
+    SegmentStats,
+    CARTSegmenter,
+    CustomCARTSegmenter,
+)
+
+from .scoring import (
+    # Classes
+    MulticollinearityChecker,
+    StepwiseSelector,
+    CreditLogisticModel,
+    # Dataclasses
+    ModelCoefficient,
+    ModelSummary,
 )
 
 __all__ = [
@@ -45,9 +61,20 @@ __all__ = [
     "StaticFeatureEngineer",
     "MissingFeatureEngineer",
     "CreditFeatureEngineer",
-    # Segmentation
+    # Segmentation - CHAID
     "CHAIDNode",
     "SegmentProfile",
     "CHAIDSegmenter",
     "VietnameseCreditSegmenter",
+    # Segmentation - CART
+    "CARTNode",
+    "SegmentStats",
+    "CARTSegmenter",
+    "CustomCARTSegmenter",
+    # Scoring
+    "MulticollinearityChecker",
+    "StepwiseSelector",
+    "CreditLogisticModel",
+    "ModelCoefficient",
+    "ModelSummary",
 ]

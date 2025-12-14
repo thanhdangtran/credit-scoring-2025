@@ -1,8 +1,9 @@
 """
 Segmentation module for credit scoring.
 
-This module provides customer segmentation tools for credit risk modeling,
-including CHAID (Chi-square Automatic Interaction Detection) algorithm.
+This module provides customer segmentation tools for credit risk modeling:
+- CHAID (Chi-square Automatic Interaction Detection)
+- CART (Classification and Regression Trees)
 
 Segmentation is used to:
 - Identify distinct customer groups with different risk profiles
@@ -22,14 +23,35 @@ from .chaid_segmenter import (
     VIETNAMESE_SEGMENT_NAMES,
 )
 
-__all__ = [
+from .cart_segmenter import (
+    # Enums
+    SplitCriterion,
+    PruningStrategy,
     # Dataclasses
+    CARTNode,
+    SegmentStats,
+    # Classes
+    CARTSegmenter,
+    CustomCARTSegmenter,
+)
+
+__all__ = [
+    # CHAID Dataclasses
     "CHAIDNode",
     "SegmentProfile",
-    # Classes
+    # CHAID Classes
     "CHAIDSegmenter",
     "VietnameseCreditSegmenter",
-    # Constants
+    # CHAID Constants
     "DEFAULT_ALPHA",
     "VIETNAMESE_SEGMENT_NAMES",
+    # CART Enums
+    "SplitCriterion",
+    "PruningStrategy",
+    # CART Dataclasses
+    "CARTNode",
+    "SegmentStats",
+    # CART Classes
+    "CARTSegmenter",
+    "CustomCARTSegmenter",
 ]
