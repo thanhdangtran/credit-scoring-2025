@@ -28,9 +28,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
 
-# =============================================================================
 # CONSTANTS AND CONFIGURATIONS
-# =============================================================================
 
 # Rolling window sizes in months
 DEFAULT_WINDOWS = [3, 6, 12]
@@ -61,9 +59,7 @@ TREND_THRESHOLDS = {
 }
 
 
-# =============================================================================
 # ENUMS
-# =============================================================================
 
 class TrendDirection(Enum):
     """Direction of trend."""
@@ -87,9 +83,7 @@ class CreditHistoryDepth(Enum):
     DEEP = "deep"
 
 
-# =============================================================================
 # TIME SERIES FEATURE ENGINEER
-# =============================================================================
 
 class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
     """
@@ -229,9 +223,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
         """Fit and transform in one step."""
         return self.fit(X, y).transform(X)
 
-    # =========================================================================
     # A. ROLLING WINDOW FEATURES
-    # =========================================================================
 
     def _create_rolling_features(self, grouped) -> pd.DataFrame:
         """
@@ -294,9 +286,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
             return np.nan
         return series.std() / abs(mean_val)
 
-    # =========================================================================
     # B. TREND FEATURES
-    # =========================================================================
 
     def _create_trend_features(self, grouped) -> pd.DataFrame:
         """
@@ -384,9 +374,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
         else:
             return TrendDirection.STABLE.value
 
-    # =========================================================================
     # C. BEHAVIORAL PATTERN FEATURES
-    # =========================================================================
 
     def _create_behavioral_features(
         self,
@@ -543,9 +531,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
         except Exception:
             return 0
 
-    # =========================================================================
     # D. VELOCITY FEATURES
-    # =========================================================================
 
     def _create_velocity_features(self, grouped) -> pd.DataFrame:
         """
@@ -623,9 +609,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
 
         return acceleration.mean() if len(acceleration) > 0 else 0.0
 
-    # =========================================================================
     # E. VNPT TELECOM FEATURES
-    # =========================================================================
 
     def _create_telecom_features(
         self,
@@ -730,9 +714,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
         return min(sum(scores) / (len(scores) * 100), 1.0)
 
 
-# =============================================================================
 # STATIC FEATURE ENGINEER
-# =============================================================================
 
 class StaticFeatureEngineer(BaseEstimator, TransformerMixin):
     """
@@ -854,9 +836,7 @@ class StaticFeatureEngineer(BaseEstimator, TransformerMixin):
         """Fit and transform in one step."""
         return self.fit(X, y).transform(X)
 
-    # =========================================================================
     # A. RATIO FEATURES
-    # =========================================================================
 
     def _create_ratio_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -921,9 +901,7 @@ class StaticFeatureEngineer(BaseEstimator, TransformerMixin):
 
         return pd.DataFrame(features, index=df.index)
 
-    # =========================================================================
     # B. INTERACTION FEATURES
-    # =========================================================================
 
     def _create_interaction_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -973,9 +951,7 @@ class StaticFeatureEngineer(BaseEstimator, TransformerMixin):
 
         return pd.DataFrame(features, index=df.index)
 
-    # =========================================================================
     # C. BUCKETING FEATURES
-    # =========================================================================
 
     def _create_bucket_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -1064,9 +1040,7 @@ class StaticFeatureEngineer(BaseEstimator, TransformerMixin):
         return pd.DataFrame(features, index=df.index)
 
 
-# =============================================================================
 # MISSING FEATURE ENGINEER
-# =============================================================================
 
 class MissingFeatureEngineer(BaseEstimator, TransformerMixin):
     """
@@ -1306,9 +1280,7 @@ class MissingFeatureEngineer(BaseEstimator, TransformerMixin):
         return pd.DataFrame(features, index=df.index)
 
 
-# =============================================================================
 # MAIN CREDIT FEATURE ENGINEER
-# =============================================================================
 
 class CreditFeatureEngineer(BaseEstimator, TransformerMixin):
     """
@@ -1522,9 +1494,7 @@ class CreditFeatureEngineer(BaseEstimator, TransformerMixin):
         return {k: v for k, v in groups.items() if v}
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Constants

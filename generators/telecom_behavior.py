@@ -28,9 +28,7 @@ from generators.base import (
 from generators.financial import truncated_normal, truncated_lognormal
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class ContractType(Enum):
     """VNPT contract types."""
@@ -110,9 +108,7 @@ LOYALTY_LABELS: Dict[str, str] = {
 }
 
 
-# =============================================================================
 # ARPU AND USAGE CONFIGURATIONS
-# =============================================================================
 
 @dataclass
 class ARPUConfig:
@@ -152,9 +148,7 @@ CALL_MINUTES_BY_PATTERN: Dict[str, Tuple[int, int, int]] = {
 }
 
 
-# =============================================================================
 # ALTERNATIVE CREDIT SCORE CALCULATION
-# =============================================================================
 
 @dataclass
 class TelecomCreditSignal:
@@ -170,9 +164,7 @@ class TelecomCreditSignal:
     overall_telecom_score: float      # 0-100 (weighted average)
 
 
-# =============================================================================
 # VNPT BEHAVIOR GENERATOR
-# =============================================================================
 
 class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
     """
@@ -1363,9 +1355,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
         return analysis
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "VNPTBehaviorGenerator",

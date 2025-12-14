@@ -50,9 +50,7 @@ except ImportError:
                 raise ValueError(f"{estimator} is not fitted")
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class BinningMethod(Enum):
     """Methods for binning continuous variables."""
@@ -85,9 +83,7 @@ IV_THRESHOLDS = {
 SMOOTHING_CONSTANT = 0.5
 
 
-# =============================================================================
 # WOE BIN STATISTICS
-# =============================================================================
 
 @dataclass
 class WOEBinStats:
@@ -147,9 +143,7 @@ class FeatureWOEResult:
         return pd.DataFrame([b.to_dict() for b in self.bins])
 
 
-# =============================================================================
 # WOE BINNER
-# =============================================================================
 
 class WOEBinner:
     """
@@ -476,9 +470,7 @@ class WOEBinner:
         return edges, assigns
 
 
-# =============================================================================
 # WOE TRANSFORMER
-# =============================================================================
 
 class WOETransformer(BaseEstimator, TransformerMixin):
     """
@@ -981,9 +973,7 @@ class WOETransformer(BaseEstimator, TransformerMixin):
         """
         return self.fit(X, y).transform(X)
 
-    # =========================================================================
     # REPORTING METHODS
-    # =========================================================================
 
     def get_woe_table(
         self,
@@ -1154,9 +1144,7 @@ class WOETransformer(BaseEstimator, TransformerMixin):
         return ax
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

@@ -19,9 +19,7 @@ sys.path.insert(0, '/home/thanhdang/Desktop/vnpt-ai')
 from config.settings import SyntheticDataConfig
 
 
-# =============================================================================
 # ABSTRACT BASE CLASS
-# =============================================================================
 
 class BaseDataGenerator(ABC):
     """
@@ -277,9 +275,7 @@ class BaseDataGenerator(ABC):
         return stats
 
 
-# =============================================================================
 # MIXIN CLASSES
-# =============================================================================
 
 class CorrelationMixin:
     """
@@ -617,9 +613,7 @@ class TimeSeriesMixin:
         return series
 
 
-# =============================================================================
 # UTILITY FUNCTIONS
-# =============================================================================
 
 def weighted_random_choice(
     rng: Generator,
@@ -912,9 +906,7 @@ def validate_vietnamese_id(id_number: str) -> bool:
     return False
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Base classes

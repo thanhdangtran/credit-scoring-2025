@@ -20,9 +20,7 @@ from generators.base import BaseDataGenerator, CorrelationMixin, TimeSeriesMixin
 from generators.financial import truncated_normal, truncated_lognormal
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class BehaviorPattern(Enum):
     """Types of behavioral patterns over time."""
@@ -76,9 +74,7 @@ PATTERN_DEFAULT_PROB: Dict[str, float] = {
 }
 
 
-# =============================================================================
 # CUSTOMER BEHAVIOR PROFILE
-# =============================================================================
 
 @dataclass
 class CustomerBehaviorProfile:
@@ -139,9 +135,7 @@ class CustomerBehaviorProfile:
                 self.behavior_pattern = BehaviorPattern.VOLATILE
 
 
-# =============================================================================
 # BEHAVIORAL SERIES GENERATOR
-# =============================================================================
 
 class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesMixin):
     """
@@ -245,9 +239,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
 
         return months
 
-    # =========================================================================
     # BEHAVIOR PATTERN GENERATORS
-    # =========================================================================
 
     def _generate_pattern_multiplier(
         self,
@@ -336,9 +328,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
 
         return series * multiplier
 
-    # =========================================================================
     # CREDIT BEHAVIOR SERIES
-    # =========================================================================
 
     def generate_dpd_trajectory(
         self,
@@ -515,9 +505,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
             'credit_limit_change': np.round(limit_changes, 4),
         })
 
-    # =========================================================================
     # TELECOM BEHAVIOR SERIES
-    # =========================================================================
 
     def generate_telecom_trajectory(
         self,
@@ -651,9 +639,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
             'complaint_flag': complaint_flag,
         })
 
-    # =========================================================================
     # ROLLING / AGGREGATE FEATURES
-    # =========================================================================
 
     def calculate_rolling_features(
         self,
@@ -852,9 +838,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
 
         return is_default, round(base_prob, 4)
 
-    # =========================================================================
     # MAIN GENERATE METHOD
-    # =========================================================================
 
     def generate(
         self,
@@ -1011,9 +995,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
         }
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "BehavioralSeriesGenerator",

@@ -68,9 +68,7 @@ from generators import (
 )
 
 
-# =============================================================================
 # LOGGING SETUP
-# =============================================================================
 
 def setup_logging(log_level: str = "INFO", log_file: Optional[str] = None) -> logging.Logger:
     """Configure logging for the pipeline."""
@@ -100,9 +98,7 @@ def setup_logging(log_level: str = "INFO", log_file: Optional[str] = None) -> lo
     return logger
 
 
-# =============================================================================
 # PIPELINE CONFIGURATION
-# =============================================================================
 
 @dataclass
 class PipelineConfig:
@@ -139,9 +135,7 @@ class PipelineConfig:
         return asdict(self)
 
 
-# =============================================================================
 # PIPELINE RESULT
-# =============================================================================
 
 @dataclass
 class PipelineResult:
@@ -188,9 +182,7 @@ class PipelineResult:
         return dfs
 
 
-# =============================================================================
 # SYNTHETIC DATA PIPELINE
-# =============================================================================
 
 class SyntheticDataPipeline:
     """
@@ -311,9 +303,7 @@ class SyntheticDataPipeline:
 
         self._generators_initialized = True
 
-    # =========================================================================
     # PIPELINE STAGES
-    # =========================================================================
 
     def _generate_demographic(self) -> pd.DataFrame:
         """Stage 1: Generate demographic data."""
@@ -542,9 +532,7 @@ class SyntheticDataPipeline:
 
         return master
 
-    # =========================================================================
     # MAIN RUN METHOD
-    # =========================================================================
 
     def run(self) -> PipelineResult:
         """
@@ -629,9 +617,7 @@ class SyntheticDataPipeline:
             summary=summary,
         )
 
-    # =========================================================================
     # SUMMARY AND EXPORT
-    # =========================================================================
 
     def _generate_summary(
         self,
@@ -815,9 +801,7 @@ class SyntheticDataPipeline:
         print("\n" + "=" * 60)
 
 
-# =============================================================================
 # CLI INTERFACE
-# =============================================================================
 
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
@@ -961,9 +945,7 @@ def main() -> None:
     logger.info("Done!")
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "PipelineConfig",

@@ -11,9 +11,7 @@ from enum import Enum, auto
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 
-# =============================================================================
 # ENUMS FOR CATEGORICAL VALUES
-# =============================================================================
 
 class OutputFormat(Enum):
     """Supported output formats for generated data."""
@@ -119,9 +117,7 @@ class LoanPurpose(Enum):
     KHAC = "khac"                                # Other
 
 
-# =============================================================================
 # DATACLASSES
-# =============================================================================
 
 @dataclass
 class MNARRule:
@@ -722,9 +718,7 @@ class RegulatoryConfig:
     })
 
 
-# =============================================================================
 # MASTER CONFIG
-# =============================================================================
 
 @dataclass
 class SyntheticDataConfig:
@@ -766,9 +760,7 @@ class SyntheticDataConfig:
         return asdict(self)
 
 
-# =============================================================================
 # DEFAULT CONFIGURATIONS
-# =============================================================================
 
 def get_default_config() -> SyntheticDataConfig:
     """Get default configuration."""
@@ -803,9 +795,7 @@ def get_production_config() -> SyntheticDataConfig:
     )
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

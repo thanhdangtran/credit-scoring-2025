@@ -38,9 +38,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import check_is_fitted
 
 
-# =============================================================================
 # CONSTANTS AND DEFAULTS
-# =============================================================================
 
 # Industry standard scorecard parameters
 DEFAULT_BASE_SCORE = 600
@@ -55,9 +53,7 @@ DEFAULT_MAX_SCORE = 850
 DEFAULT_POINT_PRECISION = 1
 
 
-# =============================================================================
 # ENUMS
-# =============================================================================
 
 class RiskRating(Enum):
     """Risk rating grades."""
@@ -77,9 +73,7 @@ class DecisionType(Enum):
     DECLINE = "decline"
 
 
-# =============================================================================
 # DATACLASSES
-# =============================================================================
 
 @dataclass
 class ScorecardBin:
@@ -153,9 +147,7 @@ class ReasonCode:
         }
 
 
-# =============================================================================
 # SCORECARD TABLE
-# =============================================================================
 
 class ScorecardTable:
     """
@@ -256,9 +248,7 @@ class ScorecardTable:
         }
 
 
-# =============================================================================
 # SCORECARD BUILDER
-# =============================================================================
 
 class ScorecardBuilder(BaseEstimator, TransformerMixin):
     """
@@ -498,9 +488,7 @@ class ScorecardBuilder(BaseEstimator, TransformerMixin):
         check_is_fitted(self, ['scorecard_table_'])
         return self.scorecard_table_.to_dataframe()
 
-    # =========================================================================
     # SCALING METHODS
-    # =========================================================================
 
     def scale_to_range(
         self,
@@ -625,9 +613,7 @@ class ScorecardBuilder(BaseEstimator, TransformerMixin):
             self.feature_points_[bin_obj.feature][bin_obj.bin_label] = bin_obj.points_rounded
 
 
-# =============================================================================
 # SCORE INTERPRETER
-# =============================================================================
 
 class ScoreInterpreter:
     """
@@ -877,9 +863,7 @@ class ScoreInterpreter:
         return self
 
 
-# =============================================================================
 # REASON CODE GENERATOR
-# =============================================================================
 
 class ReasonCodeGenerator:
     """
@@ -1065,9 +1049,7 @@ class ReasonCodeGenerator:
         return self.reason_descriptions.get('default', f"Factor: {feature}")
 
 
-# =============================================================================
 # EXPORT METHODS
-# =============================================================================
 
 class ScorecardExporter:
     """
@@ -1326,9 +1308,7 @@ class ScorecardExporter:
         return python_code
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

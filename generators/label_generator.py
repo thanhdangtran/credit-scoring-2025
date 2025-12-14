@@ -32,9 +32,7 @@ from config.settings import SyntheticDataConfig
 from generators.base import BaseDataGenerator
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class RiskGrade(Enum):
     """Risk grade classification based on PD."""
@@ -99,9 +97,7 @@ THIN_FILE_FACTOR_WEIGHTS: Dict[str, float] = {
 }
 
 
-# =============================================================================
 # TIME SERIES FEATURES FOR LABELING
-# =============================================================================
 
 @dataclass
 class TimeSeriesSignals:
@@ -181,9 +177,7 @@ class LabelingConfig:
     calibrate_to_target: bool = True
 
 
-# =============================================================================
 # LABEL GENERATOR CLASS
-# =============================================================================
 
 class LabelGenerator(BaseDataGenerator):
     """
@@ -229,9 +223,7 @@ class LabelGenerator(BaseDataGenerator):
         self._time_series_signals: Dict[str, TimeSeriesSignals] = {}
         self._segment_assignments: Dict[str, CustomerSegment] = {}
 
-    # =========================================================================
     # FACTOR SCORE CALCULATORS
-    # =========================================================================
 
     def _calculate_credit_history_score(
         self,
@@ -599,9 +591,7 @@ class LabelGenerator(BaseDataGenerator):
 
         return np.clip(score, 0, 1)
 
-    # =========================================================================
     # TIME SERIES SIGNAL EXTRACTION
-    # =========================================================================
 
     def extract_time_series_signals(
         self,
@@ -720,9 +710,7 @@ class LabelGenerator(BaseDataGenerator):
 
         return signals
 
-    # =========================================================================
     # SEGMENT ASSIGNMENT
-    # =========================================================================
 
     def _assign_customer_segment(
         self,
@@ -751,9 +739,7 @@ class LabelGenerator(BaseDataGenerator):
         else:
             return CustomerSegment.SUBPRIME
 
-    # =========================================================================
     # PROBABILITY OF DEFAULT CALCULATION
-    # =========================================================================
 
     def calculate_pd(
         self,
@@ -835,9 +821,7 @@ class LabelGenerator(BaseDataGenerator):
         # Clip to valid range
         return float(np.clip(pd_with_noise, 0.001, 0.95))
 
-    # =========================================================================
     # LABEL GENERATION METHODS
-    # =========================================================================
 
     def generate_default_label(
         self,
@@ -889,9 +873,7 @@ class LabelGenerator(BaseDataGenerator):
                 return grade
         return "E"  # Default to highest risk
 
-    # =========================================================================
     # DEFAULT RATE CALIBRATION
-    # =========================================================================
 
     def _calibrate_default_rates(
         self,
@@ -930,9 +912,7 @@ class LabelGenerator(BaseDataGenerator):
 
         return df
 
-    # =========================================================================
     # IMBALANCED SAMPLING
-    # =========================================================================
 
     def generate_imbalanced_sample(
         self,
@@ -993,9 +973,7 @@ class LabelGenerator(BaseDataGenerator):
 
         return training_df, validation_df
 
-    # =========================================================================
     # MAIN GENERATE METHOD
-    # =========================================================================
 
     def generate(
         self,
@@ -1166,9 +1144,7 @@ class LabelGenerator(BaseDataGenerator):
         return stats
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

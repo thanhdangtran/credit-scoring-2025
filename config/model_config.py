@@ -23,9 +23,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import math
 
 
-# =============================================================================
 # ENUMS
-# =============================================================================
 
 class SegmentationMethod(Enum):
     """Methods for customer segmentation."""
@@ -99,9 +97,7 @@ class MetricType(Enum):
     LOG_LOSS = "log_loss"           # Log Loss
 
 
-# =============================================================================
 # SPECIAL CODES
-# =============================================================================
 
 # Standard special codes for credit scoring
 DEFAULT_SPECIAL_CODES: Dict[int, str] = {
@@ -113,9 +109,7 @@ DEFAULT_SPECIAL_CODES: Dict[int, str] = {
 }
 
 
-# =============================================================================
 # SEGMENTATION CONFIG
-# =============================================================================
 
 @dataclass
 class SegmentationConfig:
@@ -205,9 +199,7 @@ class SegmentationConfig:
         return self.categorical_features + self.continuous_features
 
 
-# =============================================================================
 # WOE CONFIG
-# =============================================================================
 
 @dataclass
 class WOEConfig:
@@ -346,9 +338,7 @@ class WOEConfig:
             return "Suspicious (possible overfitting)"
 
 
-# =============================================================================
 # LOGISTIC REGRESSION CONFIG
-# =============================================================================
 
 @dataclass
 class LogisticConfig:
@@ -463,9 +453,7 @@ class LogisticConfig:
         return params
 
 
-# =============================================================================
 # SCORECARD CONFIG
-# =============================================================================
 
 @dataclass
 class ScorecardConfig:
@@ -646,9 +634,7 @@ class ScorecardConfig:
         return "Unknown - Không xác định"
 
 
-# =============================================================================
 # MODEL VALIDATION CONFIG
-# =============================================================================
 
 @dataclass
 class ModelValidationConfig:
@@ -756,9 +742,7 @@ class ModelValidationConfig:
         }
 
 
-# =============================================================================
 # COMBINED MODEL CONFIG
-# =============================================================================
 
 @dataclass
 class CreditScoringModelConfig:
@@ -839,9 +823,7 @@ class CreditScoringModelConfig:
         )
 
 
-# =============================================================================
 # FACTORY FUNCTIONS
-# =============================================================================
 
 def get_default_model_config() -> CreditScoringModelConfig:
     """Get default model configuration for Vietnamese market."""
@@ -955,9 +937,7 @@ def get_behavioral_model_config() -> CreditScoringModelConfig:
     return config
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

@@ -29,9 +29,7 @@ from config.settings import SyntheticDataConfig
 from generators.base import BaseDataGenerator
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class MissingMechanism(Enum):
     """Types of missing data mechanisms."""
@@ -51,9 +49,7 @@ class MissingCategory(Enum):
     ASSET = "asset"
 
 
-# =============================================================================
 # MNAR RULE DATACLASS
-# =============================================================================
 
 @dataclass
 class MNARRule:
@@ -95,9 +91,7 @@ class MNARRule:
                 )
 
 
-# =============================================================================
 # MISSING REPORT DATACLASS
-# =============================================================================
 
 @dataclass
 class MissingReport:
@@ -165,9 +159,7 @@ class MissingReport:
         return "\n".join(lines)
 
 
-# =============================================================================
 # VIETNAMESE CREDIT MNAR RULES
-# =============================================================================
 
 def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
     """
@@ -182,9 +174,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
     """
     rules = []
 
-    # =========================================================================
     # RULE 1: Income MNAR - Low income underreporting
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="INCOME_LOW_MNAR",
         target_column="monthly_income",
@@ -224,9 +214,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="Self-employed/freelancers often lack income documentation",
     ))
 
-    # =========================================================================
     # RULE 2: Credit History MNAR - Bad credit missing
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="CREDIT_BAD_MNAR",
         target_column="cic_score",
@@ -266,9 +254,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="High DPD information may be missing due to customer concealment",
     ))
 
-    # =========================================================================
     # RULE 3: Employment MNAR - Unstable job missing
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="EMPLOYMENT_UNSTABLE_MAR",
         target_column="job_tenure_months",
@@ -308,9 +294,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="New workers (<6 months) tend to not report tenure",
     ))
 
-    # =========================================================================
     # RULE 4: Debt MNAR - High debt underreporting
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="DEBT_HIGH_MNAR",
         target_column="existing_debt",
@@ -350,9 +334,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="High DTI (>60%) customers often have missing data",
     ))
 
-    # =========================================================================
     # RULE 5: Age-related MAR
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="AGE_ELDERLY_TELECOM_MAR",
         target_column="monthly_arpu",
@@ -392,9 +374,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="Elderly (>60) use fewer digital services",
     ))
 
-    # =========================================================================
     # RULE 6: Geographic MAR
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="GEO_RURAL_MAR",
         target_column="cic_score",
@@ -421,9 +401,7 @@ def _create_vietnamese_credit_mnar_rules() -> List[MNARRule]:
         description_en="Small provinces have less banking data",
     ))
 
-    # =========================================================================
     # RULE 7: Asset MNAR
-    # =========================================================================
     rules.append(MNARRule(
         rule_id="ASSET_NO_PROPERTY_MNAR",
         target_column="property_value",
@@ -580,9 +558,7 @@ THIN_FILE_MNAR_RULES = _create_thin_file_mnar_rules()
 ALL_MNAR_RULES = VIETNAMESE_CREDIT_MNAR_RULES + TELECOM_MNAR_RULES + THIN_FILE_MNAR_RULES
 
 
-# =============================================================================
 # MNAR PATTERN GENERATOR
-# =============================================================================
 
 class MNARPatternGenerator(BaseDataGenerator):
     """
@@ -621,9 +597,7 @@ class MNARPatternGenerator(BaseDataGenerator):
         self._missing_masks: Dict[str, np.ndarray] = {}
         self._applied_rules: List[str] = []
 
-    # =========================================================================
     # MISSING MECHANISM METHODS
-    # =========================================================================
 
     def apply_mcar(
         self,
@@ -897,9 +871,7 @@ class MNARPatternGenerator(BaseDataGenerator):
 
         return df, report
 
-    # =========================================================================
     # MISSING INDICATORS
-    # =========================================================================
 
     def generate_missing_indicator(
         self,
@@ -955,9 +927,7 @@ class MNARPatternGenerator(BaseDataGenerator):
 
         return stats
 
-    # =========================================================================
     # REPORT GENERATION
-    # =========================================================================
 
     def _generate_missing_report(
         self,
@@ -1032,9 +1002,7 @@ class MNARPatternGenerator(BaseDataGenerator):
             recommendations=recommendations,
         )
 
-    # =========================================================================
     # MAIN GENERATE METHOD (required by BaseDataGenerator)
-    # =========================================================================
 
     def generate(
         self,
@@ -1055,9 +1023,7 @@ class MNARPatternGenerator(BaseDataGenerator):
         return self.apply_all_mnar_rules(df, rules)
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

@@ -23,9 +23,7 @@ from generators.base import BaseDataGenerator, CorrelationMixin, TimeSeriesMixin
 from generators.financial import truncated_normal, truncated_lognormal
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class SeasonalityType(Enum):
     """Types of seasonality patterns."""
@@ -90,9 +88,7 @@ MONTHLY_SPENDING_MULTIPLIER: Dict[int, float] = {
 }
 
 
-# =============================================================================
 # VIETNAMESE CALENDAR HELPER
-# =============================================================================
 
 @dataclass
 class VietnameseCalendar:
@@ -183,9 +179,7 @@ class VietnameseCalendar:
         return base_mult * (0.5 + 0.5 * tet_mult)
 
 
-# =============================================================================
 # CUSTOMER PROFILE FOR TIME SERIES
-# =============================================================================
 
 @dataclass
 class CustomerTransactionProfile:
@@ -231,9 +225,7 @@ class CustomerTransactionProfile:
             self.is_risky = self.monthly_income < 8_000_000
 
 
-# =============================================================================
 # TRANSACTION SERIES GENERATOR
-# =============================================================================
 
 class TransactionSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesMixin):
     """
@@ -1021,9 +1013,7 @@ class TransactionSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeries
         return summary
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "TransactionSeriesGenerator",

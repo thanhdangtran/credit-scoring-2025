@@ -49,9 +49,7 @@ except ImportError:
     warnings.warn("statsmodels not available, some features will be limited")
 
 
-# =============================================================================
 # CONSTANTS
-# =============================================================================
 
 # IV thresholds
 IV_MIN_THRESHOLD = 0.02  # Below this, feature is not useful
@@ -68,9 +66,7 @@ P_VALUE_ENTER = 0.05
 P_VALUE_REMOVE = 0.10
 
 
-# =============================================================================
 # ENUMS
-# =============================================================================
 
 class SelectionMethod(Enum):
     """Feature selection methods."""
@@ -89,9 +85,7 @@ class SelectionCriterion(Enum):
     LIKELIHOOD = "likelihood"
 
 
-# =============================================================================
 # MULTICOLLINEARITY CHECKER
-# =============================================================================
 
 class MulticollinearityChecker:
     """
@@ -341,9 +335,7 @@ class MulticollinearityChecker:
         }
 
 
-# =============================================================================
 # STEPWISE SELECTOR
-# =============================================================================
 
 class StepwiseSelector:
     """
@@ -688,9 +680,7 @@ class StepwiseSelector:
         return self._forward_selection_sklearn(X, y)
 
 
-# =============================================================================
 # MODEL OUTPUT DATACLASS
-# =============================================================================
 
 @dataclass
 class ModelCoefficient:
@@ -734,9 +724,7 @@ class ModelSummary:
         return pd.DataFrame([c.to_dict() for c in self.coefficients])
 
 
-# =============================================================================
 # CREDIT LOGISTIC MODEL
-# =============================================================================
 
 class CreditLogisticModel(BaseEstimator, ClassifierMixin):
     """
@@ -1335,9 +1323,7 @@ class CreditLogisticModel(BaseEstimator, ClassifierMixin):
         )
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

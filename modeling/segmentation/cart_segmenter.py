@@ -34,9 +34,7 @@ from sklearn.utils.validation import check_is_fitted
 from sklearn.inspection import permutation_importance as sklearn_permutation_importance
 
 
-# =============================================================================
 # CONSTANTS AND CONFIGURATION
-# =============================================================================
 
 # Default parameters
 DEFAULT_MAX_DEPTH = 5
@@ -50,9 +48,7 @@ BAD_RATE_MERGE_THRESHOLD = 0.01
 MIN_SEGMENT_PCT = 0.05
 
 
-# =============================================================================
 # ENUMS
-# =============================================================================
 
 class SplitCriterion(Enum):
     """Splitting criteria for CART."""
@@ -69,9 +65,7 @@ class PruningStrategy(Enum):
     RISK_BASED = "risk_based"
 
 
-# =============================================================================
 # CART NODE DATACLASS
-# =============================================================================
 
 @dataclass
 class CARTNode:
@@ -167,9 +161,7 @@ class SegmentStats:
         }
 
 
-# =============================================================================
 # CART SEGMENTER
-# =============================================================================
 
 class CARTSegmenter(BaseEstimator, ClassifierMixin):
     """
@@ -397,9 +389,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
 
         return paths
 
-    # =========================================================================
     # TREE BUILDING METHODS
-    # =========================================================================
 
     def _build_cart_tree(
         self,
@@ -558,9 +548,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
 
         return rules
 
-    # =========================================================================
     # LEAF NODE METHODS
-    # =========================================================================
 
     def get_leaf_nodes(self) -> List[CARTNode]:
         """Get all leaf nodes in the tree."""
@@ -596,9 +584,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
         collect_nodes(self.cart_tree_)
         return pd.DataFrame(nodes_data)
 
-    # =========================================================================
     # SEGMENT REFINEMENT
-    # =========================================================================
 
     def _merge_similar_segments(self):
         """Merge segments with similar bad rates."""
@@ -741,9 +727,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
 
         return self
 
-    # =========================================================================
     # FEATURE IMPORTANCE
-    # =========================================================================
 
     def get_feature_importance(
         self,
@@ -821,9 +805,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
             zip(self.feature_names_, result.importances_mean)
         }
 
-    # =========================================================================
     # COMPARISON WITH CHAID
-    # =========================================================================
 
     def compare_with_chaid(
         self,
@@ -868,9 +850,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
 
         return pd.DataFrame(comparison)
 
-    # =========================================================================
     # VISUALIZATION
-    # =========================================================================
 
     def plot_tree(
         self,
@@ -1003,9 +983,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
         plt.tight_layout()
         return fig
 
-    # =========================================================================
     # EXPORT METHODS
-    # =========================================================================
 
     def to_sql_rules(
         self,
@@ -1244,9 +1222,7 @@ class CARTSegmenter(BaseEstimator, ClassifierMixin):
         )
 
 
-# =============================================================================
 # CUSTOM CRITERIA CART SEGMENTER
-# =============================================================================
 
 class CustomCARTSegmenter(CARTSegmenter):
     """
@@ -1351,9 +1327,7 @@ class CustomCARTSegmenter(CARTSegmenter):
         return ks
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Enums

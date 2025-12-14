@@ -25,9 +25,7 @@ from generators.base import (
 )
 
 
-# =============================================================================
 # VIETNAMESE PROVINCE DATA
-# =============================================================================
 
 @dataclass
 class ProvinceInfo:
@@ -120,9 +118,7 @@ VIETNAM_PROVINCES: List[ProvinceInfo] = [
 ]
 
 
-# =============================================================================
 # DEMOGRAPHIC DISTRIBUTIONS
-# =============================================================================
 
 # Education level distribution by age group
 EDUCATION_BY_AGE: Dict[str, Dict[str, float]] = {
@@ -238,9 +234,7 @@ MARITAL_STATUS_LABELS: Dict[str, str] = {
 }
 
 
-# =============================================================================
 # DEMOGRAPHIC GENERATOR
-# =============================================================================
 
 class DemographicGenerator(BaseDataGenerator, CorrelationMixin):
     """
@@ -731,9 +725,7 @@ class DemographicGenerator(BaseDataGenerator, CorrelationMixin):
         return report
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "DemographicGenerator",

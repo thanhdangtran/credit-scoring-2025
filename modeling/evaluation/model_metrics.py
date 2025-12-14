@@ -39,9 +39,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.figure import Figure
 
-# ============================================================================
 # DATA CLASSES
-# ============================================================================
 
 
 @dataclass
@@ -174,9 +172,7 @@ class BaselIRBResult:
     capital_requirement: float
 
 
-# ============================================================================
 # DISCRIMINATION METRICS
-# ============================================================================
 
 
 class DiscriminationMetrics:
@@ -205,9 +201,7 @@ class DiscriminationMetrics:
         """
         self.figsize = figsize
 
-    # -------------------------------------------------------------------------
     # A. ROC Analysis
-    # -------------------------------------------------------------------------
 
     def calculate_auc(
         self,
@@ -350,9 +344,7 @@ class DiscriminationMetrics:
         plt.tight_layout()
         return fig
 
-    # -------------------------------------------------------------------------
     # B. KS Statistic
-    # -------------------------------------------------------------------------
 
     def calculate_ks(
         self,
@@ -582,9 +574,7 @@ class DiscriminationMetrics:
             })
         return pd.DataFrame(data)
 
-    # -------------------------------------------------------------------------
     # C. Precision-Recall
-    # -------------------------------------------------------------------------
 
     def calculate_precision_recall(
         self,
@@ -708,9 +698,7 @@ class DiscriminationMetrics:
         """
         return average_precision_score(y_true, y_prob)
 
-    # -------------------------------------------------------------------------
     # D. Lift Analysis
-    # -------------------------------------------------------------------------
 
     def calculate_lift(
         self,
@@ -901,9 +889,7 @@ class DiscriminationMetrics:
         return fig
 
 
-# ============================================================================
 # CALIBRATION METRICS
-# ============================================================================
 
 
 class CalibrationMetrics:
@@ -932,9 +918,7 @@ class CalibrationMetrics:
         """
         self.figsize = figsize
 
-    # -------------------------------------------------------------------------
     # A. Calibration Analysis
-    # -------------------------------------------------------------------------
 
     def hosmer_lemeshow_test(
         self,
@@ -1099,9 +1083,7 @@ class CalibrationMetrics:
         """
         return brier_score_loss(y_true, y_prob)
 
-    # -------------------------------------------------------------------------
     # B. Score Distribution
-    # -------------------------------------------------------------------------
 
     def plot_score_distribution(
         self,
@@ -1282,9 +1264,7 @@ class CalibrationMetrics:
         return result.psi
 
 
-# ============================================================================
 # STABILITY METRICS
-# ============================================================================
 
 
 class StabilityMetrics:
@@ -1320,9 +1300,7 @@ class StabilityMetrics:
         """
         self.figsize = figsize
 
-    # -------------------------------------------------------------------------
     # A. PSI - Population Stability Index
-    # -------------------------------------------------------------------------
 
     def calculate_psi(
         self,
@@ -1483,9 +1461,7 @@ class StabilityMetrics:
         plt.tight_layout()
         return fig
 
-    # -------------------------------------------------------------------------
     # B. CSI - Characteristic Stability Index
-    # -------------------------------------------------------------------------
 
     def calculate_csi_per_feature(
         self,
@@ -1633,9 +1609,7 @@ class StabilityMetrics:
         return fig
 
 
-# ============================================================================
 # DECILE ANALYSIS
-# ============================================================================
 
 
 class DecileAnalysis:
@@ -1917,9 +1891,7 @@ class DecileAnalysis:
         return fig
 
 
-# ============================================================================
 # MODEL COMPARER
-# ============================================================================
 
 
 class ModelComparer:
@@ -2210,9 +2182,7 @@ class ModelComparer:
         return df
 
 
-# ============================================================================
 # REGULATORY METRICS (NHNN/BASEL)
-# ============================================================================
 
 
 class RegulatoryMetrics:
@@ -2257,9 +2227,7 @@ class RegulatoryMetrics:
         self.correlation_corporate = correlation_corporate
         self.confidence_level = confidence_level
 
-    # -------------------------------------------------------------------------
     # A. IFRS9 ECL Metrics
-    # -------------------------------------------------------------------------
 
     def calculate_12m_pd(
         self,
@@ -2478,9 +2446,7 @@ class RegulatoryMetrics:
             'total_ecl': np.sum(ecl)
         }
 
-    # -------------------------------------------------------------------------
     # B. Basel IRB Metrics
-    # -------------------------------------------------------------------------
 
     def calculate_risk_weight(
         self,
@@ -2611,9 +2577,7 @@ class RegulatoryMetrics:
         })
 
 
-# ============================================================================
 # COMPREHENSIVE EVALUATION REPORT
-# ============================================================================
 
 
 class ModelEvaluationReport:
@@ -3051,9 +3015,7 @@ class ModelEvaluationReport:
         return output_path
 
 
-# ============================================================================
 # CONVENIENCE FUNCTIONS
-# ============================================================================
 
 
 def quick_evaluation(

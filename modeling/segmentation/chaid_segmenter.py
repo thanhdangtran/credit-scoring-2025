@@ -45,9 +45,7 @@ except ImportError:
                 raise ValueError(f"{estimator} is not fitted")
 
 
-# =============================================================================
 # CONSTANTS AND CONFIGURATION
-# =============================================================================
 
 # Default significance level for chi-square tests
 DEFAULT_ALPHA = 0.05
@@ -70,9 +68,7 @@ VIETNAMESE_SEGMENT_NAMES = {
 }
 
 
-# =============================================================================
 # CHAID NODE DATACLASS
-# =============================================================================
 
 @dataclass
 class CHAIDNode:
@@ -169,9 +165,7 @@ class SegmentProfile:
         }
 
 
-# =============================================================================
 # CHAID SEGMENTER
-# =============================================================================
 
 class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
     """
@@ -393,9 +387,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
 
         return profiles
 
-    # =========================================================================
     # TREE BUILDING METHODS
-    # =========================================================================
 
     def _build_tree(
         self,
@@ -555,9 +547,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
 
         return best_feature, best_categories, best_chi_sq, best_p_value
 
-    # =========================================================================
     # CHI-SQUARE METHODS
-    # =========================================================================
 
     def _merge_categories(
         self,
@@ -711,9 +701,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
             return self.alpha_split / n_comparisons
         return self.alpha_split
 
-    # =========================================================================
     # PREPROCESSING METHODS
-    # =========================================================================
 
     def _detect_feature_types(self, X: pd.DataFrame) -> Dict[str, str]:
         """Detect whether features are continuous or categorical."""
@@ -797,9 +785,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
 
         return pd.cut(x, bins=bins, labels=labels, include_lowest=True)
 
-    # =========================================================================
     # TREE TRAVERSAL METHODS
-    # =========================================================================
 
     def _traverse_tree(self, row: pd.Series, node: CHAIDNode) -> CHAIDNode:
         """Traverse tree to find leaf node for a sample."""
@@ -888,9 +874,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
 
         return None
 
-    # =========================================================================
     # SEGMENT MAPPING AND NAMING
-    # =========================================================================
 
     def _create_segment_mapping(self):
         """Create mapping from leaf node IDs to segment IDs."""
@@ -952,9 +936,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
                 f: 0.0 for f in self.feature_names_
             }
 
-    # =========================================================================
     # VISUALIZATION METHODS
-    # =========================================================================
 
     def plot_tree(
         self,
@@ -1189,9 +1171,7 @@ class CHAIDSegmenter(BaseEstimator, ClassifierMixin):
             self._collect_nodes(child, data)
 
 
-# =============================================================================
 # VIETNAMESE CREDIT SEGMENTS
-# =============================================================================
 
 class VietnameseCreditSegmenter(CHAIDSegmenter):
     """
@@ -1288,9 +1268,7 @@ class VietnameseCreditSegmenter(CHAIDSegmenter):
         }
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     # Dataclasses

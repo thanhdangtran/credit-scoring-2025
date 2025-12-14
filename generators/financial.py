@@ -25,9 +25,7 @@ from generators.base import (
 )
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class EmploymentType(Enum):
     """Employment type categories."""
@@ -94,9 +92,7 @@ PROPERTY_LABELS: Dict[str, str] = {
 }
 
 
-# =============================================================================
 # INCOME CONFIGURATION BY REGION AND EDUCATION
-# =============================================================================
 
 @dataclass
 class IncomeConfig:
@@ -161,9 +157,7 @@ EMPLOYMENT_INCOME_MULTIPLIER: Dict[str, Tuple[float, float]] = {
 }
 
 
-# =============================================================================
 # HELPER FUNCTIONS
-# =============================================================================
 
 def truncated_normal(
     rng: np.random.Generator,
@@ -226,9 +220,7 @@ def truncated_lognormal(
     return samples
 
 
-# =============================================================================
 # FINANCIAL GENERATOR
-# =============================================================================
 
 class FinancialGenerator(BaseDataGenerator, CorrelationMixin):
     """
@@ -1155,9 +1147,7 @@ class FinancialGenerator(BaseDataGenerator, CorrelationMixin):
         return summary
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "FinancialGenerator",

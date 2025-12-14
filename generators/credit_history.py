@@ -25,9 +25,7 @@ from generators.base import (
 from generators.financial import truncated_normal, truncated_lognormal
 
 
-# =============================================================================
 # ENUMS AND CONSTANTS
-# =============================================================================
 
 class CICGrade(Enum):
     """CIC credit grades (Vietnamese credit rating)."""
@@ -127,9 +125,7 @@ CIC_GRADE_PD: Dict[str, Tuple[float, float]] = {
 }
 
 
-# =============================================================================
 # CONFIGURATION
-# =============================================================================
 
 @dataclass
 class ThinFileConfig:
@@ -148,9 +144,7 @@ class ThinFileConfig:
             }
 
 
-# =============================================================================
 # CREDIT HISTORY GENERATOR
-# =============================================================================
 
 class CreditHistoryGenerator(BaseDataGenerator, CorrelationMixin):
     """
@@ -1086,9 +1080,7 @@ class CreditHistoryGenerator(BaseDataGenerator, CorrelationMixin):
         return summary
 
 
-# =============================================================================
 # MODULE EXPORTS
-# =============================================================================
 
 __all__ = [
     "CreditHistoryGenerator",
