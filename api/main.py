@@ -26,7 +26,7 @@ model_cache = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting VNPT Credit Scoring API...")
+    logger.info("Starting Credit Scoring API...")
     logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
 
     # Load model on startup (optional)
@@ -39,12 +39,12 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    logger.info("Shutting down VNPT Credit Scoring API...")
+    logger.info("Shutting down Credit Scoring API...")
 
 
 # Create FastAPI application
 app = FastAPI(
-    title="VNPT Credit Scoring API",
+    title="Credit Scoring API",
     description="""
     API for Vietnamese Credit Scoring System.
 
@@ -125,7 +125,7 @@ app.include_router(monitoring.router, prefix="/api/v1", tags=["Monitoring"])
 @app.get("/", tags=["Root"])
 async def root():
     return {
-        "service": "VNPT Credit Scoring API",
+        "service": "Credit Scoring API",
         "version": "1.0.0",
         "status": "running",
         "docs": "/docs",

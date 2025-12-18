@@ -8,7 +8,7 @@ import pandas as pd
 from scipy import stats
 
 import sys
-sys.path.insert(0, '/home/thanhdang/Desktop/vnpt-ai')
+sys.path.insert(0, '/home/thanhdang/Desktop/credit-scoring-ai')
 
 from config.settings import SyntheticDataConfig
 from generators.base import BaseDataGenerator, CorrelationMixin, TimeSeriesMixin

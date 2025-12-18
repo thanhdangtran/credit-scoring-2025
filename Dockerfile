@@ -1,4 +1,4 @@
-# VNPT AI Credit Scoring - Production Dockerfile
+# Credit Scoring AI - Production Dockerfile
 FROM python:3.10-slim
 
 # Set environment variables

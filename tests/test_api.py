@@ -11,7 +11,7 @@ class TestHealthEndpoints:
         response = client.get("/")
         assert response.status_code == 200
         data = response.json()
-        assert data["service"] == "VNPT Credit Scoring API"
+        assert data["service"] == "Credit Scoring API"
         assert "version" in data
 
     def test_health(self):

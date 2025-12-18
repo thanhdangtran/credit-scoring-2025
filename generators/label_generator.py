@@ -385,9 +385,9 @@ class LabelGenerator(BaseDataGenerator):
     ) -> float:
         score = 0.0
 
-        # Check if VNPT customer
-        is_vnpt = row.get('is_vnpt_customer', False)
-        if not is_vnpt or pd.isna(is_vnpt):
+        # Check if telecom customer
+        is_telecom = row.get('is_telecom_customer', False)
+        if not is_telecom or pd.isna(is_telecom):
             # No telecom data - return neutral score
             return 0.5
 
@@ -865,14 +865,14 @@ class LabelGenerator(BaseDataGenerator):
 
         # Merge telecom
         if telecom_df is not None:
-            telecom_cols = ['customer_id', 'is_vnpt_customer', 'telecom_credit_score',
+            telecom_cols = ['customer_id', 'is_telecom_customer', 'telecom_credit_score',
                            'payment_rate', 'contract_type_code', 'monthly_arpu', 'tenure_months']
             available_telecom = [c for c in telecom_cols if c in telecom_df.columns]
             merged = merged.merge(telecom_df[available_telecom], on='customer_id', how='left')
 
         # Fill NaN for boolean columns
         merged['has_credit_history'] = merged['has_credit_history'].fillna(False)
-        merged['is_vnpt_customer'] = merged.get('is_vnpt_customer', pd.Series([False] * len(merged))).fillna(False)
+        merged['is_telecom_customer'] = merged.get('is_telecom_customer', pd.Series([False] * len(merged))).fillna(False)
 
         # Generate labels
         results = []

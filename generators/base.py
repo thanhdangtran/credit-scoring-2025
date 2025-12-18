@@ -6,7 +6,7 @@ import pandas as pd
 from numpy.random import Generator
 
 import sys
-sys.path.insert(0, '/home/thanhdang/Desktop/vnpt-ai')
+sys.path.insert(0, '/home/thanhdang/Desktop/credit-scoring-ai')
 
 from config.settings import SyntheticDataConfig
 
@@ -461,7 +461,7 @@ def generate_vietnamese_phone(
 ) -> str:
     # Vietnamese mobile prefixes by carrier
     prefixes = {
-        'vnpt': ['091', '094', '088', '083', '084', '085', '081', '082'],
+        'vinaphone': ['091', '094', '088', '083', '084', '085', '081', '082'],
         'viettel': ['096', '097', '098', '086', '032', '033', '034', '035', '036', '037', '038', '039'],
         'mobifone': ['090', '093', '089', '070', '076', '077', '078', '079'],
         'vietnamobile': ['092', '056', '058'],

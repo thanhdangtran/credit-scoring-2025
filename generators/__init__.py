@@ -48,7 +48,7 @@ from .credit_history import (
 )
 
 from .telecom_behavior import (
-    VNPTBehaviorGenerator,
+    TelecomBehaviorGenerator,
     ContractType,
     ServiceBundle,
     PaymentMethod,
@@ -145,7 +145,7 @@ __all__ = [
     "CIC_GRADE_PD",
     "ThinFileConfig",
     # Telecom behavior generator
-    "VNPTBehaviorGenerator",
+    "TelecomBehaviorGenerator",
     "ContractType",
     "ServiceBundle",
     "PaymentMethod",

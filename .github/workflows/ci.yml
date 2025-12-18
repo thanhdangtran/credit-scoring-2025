@@ -125,7 +125,7 @@ jobs:
         with:
           context: .
           push: false
-          tags: vnpt-credit-scoring:${{ github.sha }}
+          tags: credit-scoring:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

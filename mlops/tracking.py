@@ -24,7 +24,7 @@ class ExperimentConfig:
     def __post_init__(self):
         if not self.tags:
             self.tags = {
-                "project": "vnpt-credit-scoring",
+                "project": "credit-scoring",
                 "team": "data-science",
             }
 
@@ -51,7 +51,7 @@ class MLflowTracker:
         if experiment is None:
             mlflow.create_experiment(
                 self.experiment_name,
-                tags={"project": "vnpt-credit-scoring"}
+                tags={"project": "credit-scoring"}
             )
 
         mlflow.set_experiment(self.experiment_name)
@@ -333,7 +333,7 @@ def get_or_create_experiment(
     if experiment is None:
         experiment_id = mlflow.create_experiment(
             experiment_name,
-            tags=tags or {"project": "vnpt-credit-scoring"}
+            tags=tags or {"project": "credit-scoring"}
         )
     else:
         experiment_id = experiment.experiment_id

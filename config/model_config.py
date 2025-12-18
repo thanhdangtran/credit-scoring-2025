@@ -539,7 +539,7 @@ class CreditScoringModelConfig:
     validation: ModelValidationConfig = field(default_factory=ModelValidationConfig)
 
     # Model metadata
-    model_name: str = "vnpt_credit_score_v1"
+    model_name: str = "credit_score_v1"
     model_version: str = "1.0.0"
     model_type: str = "application_scorecard"  # 'application', 'behavioral', 'collection'
 
@@ -643,7 +643,7 @@ def get_default_model_config() -> CreditScoringModelConfig:
             primary_metric=MetricType.GINI,
             min_gini=0.30,
         ),
-        model_name="vnpt_credit_score_v1",
+        model_name="credit_score_v1",
         demographic_features=[
             'age', 'gender_code', 'education_level_code', 'marital_status_code',
             'province_code', 'is_urban',
@@ -657,7 +657,7 @@ def get_default_model_config() -> CreditScoringModelConfig:
             'num_active_loans', 'credit_utilization', 'max_dpd_ever',
         ],
         telecom_features=[
-            'is_vnpt_customer', 'telecom_credit_score', 'payment_rate',
+            'is_telecom_customer', 'telecom_credit_score', 'payment_rate',
             'tenure_months', 'monthly_arpu', 'contract_type_code',
         ],
         behavioral_features=[
@@ -679,12 +679,12 @@ def get_thin_file_model_config() -> CreditScoringModelConfig:
 
     # Focus on telecom features
     config.telecom_features = [
-        'is_vnpt_customer', 'telecom_credit_score', 'payment_rate',
+        'is_telecom_customer', 'telecom_credit_score', 'payment_rate',
         'tenure_months', 'monthly_arpu', 'contract_type_code',
         'late_payment_count', 'avg_days_to_payment', 'data_usage_trend',
     ]
 
-    config.model_name = "vnpt_thin_file_score_v1"
+    config.model_name = "thin_file_score_v1"
 
     return config
 
@@ -706,7 +706,7 @@ def get_behavioral_model_config() -> CreditScoringModelConfig:
         'telecom_payment_trend', 'telecom_late_rate',
     ]
 
-    config.model_name = "vnpt_behavioral_score_v1"
+    config.model_name = "behavioral_score_v1"
 
     return config
 

@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 import sys
-sys.path.insert(0, '/home/thanhdang/Desktop/vnpt-ai')
+sys.path.insert(0, '/home/thanhdang/Desktop/credit-scoring-ai')
 
 from config.settings import SyntheticDataConfig
 from generators.base import (
@@ -39,7 +39,7 @@ class PaymentMethod(Enum):
     BANK_TRANSFER = "bank_transfer"          # Bank transfer
     VI_DIEN_TU = "vi_dien_tu"               # E-wallet (MoMo, ZaloPay, etc.)
     AUTO_DEBIT = "auto_debit"               # Auto debit from bank
-    VNPT_PAY = "vnpt_pay"                   # VNPT Pay app
+    TELECOM_PAY = "telecom_pay"             # Telecom provider payment app
     CREDIT_CARD = "credit_card"             # Credit card
 
 
@@ -79,7 +79,7 @@ PAYMENT_LABELS: Dict[str, str] = {
     "bank_transfer": "Chuyển khoản",
     "vi_dien_tu": "Ví điện tử",
     "auto_debit": "Trích nợ tự động",
-    "vnpt_pay": "VNPT Pay",
+    "telecom_pay": "Telecom Pay",
     "credit_card": "Thẻ tín dụng",
 }
 
@@ -142,9 +142,9 @@ class TelecomCreditSignal:
     overall_telecom_score: float      # 0-100 (weighted average)
 
 
-# VNPT BEHAVIOR GENERATOR
+# TELECOM BEHAVIOR GENERATOR
 
-class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
+class TelecomBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
     def __init__(
         self,
         config: SyntheticDataConfig,
@@ -156,8 +156,8 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
     def _set_default_schema(self) -> None:
         self.set_schema({
             'customer_id': str,
-            'is_vnpt_customer': bool,
-            'vnpt_customer_tenure_months': int,
+            'is_telecom_customer': bool,
+            'telecom_customer_tenure_months': int,
             'contract_type': str,
             'contract_type_code': str,
             'service_bundle': str,
@@ -192,24 +192,24 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
         else:
             return "55-65"
 
-    def _generate_is_vnpt_customer(
+    def _generate_is_telecom_customer(
         self,
         n: int,
         province_codes: np.ndarray
     ) -> np.ndarray:
         is_customer = np.zeros(n, dtype=bool)
 
-        # VNPT market share varies by region
+        # Telecom market share varies by region
         # Stronger in Northern provinces and state-affiliated areas
-        strong_vnpt_provinces = {
+        strong_telecom_provinces = {
             "HN", "HP", "QN", "BN", "HD", "TB", "ND", "NB",  # North
             "TH", "NA", "HT", "QB", "QT", "TTH",  # North Central
         }
 
         for i in range(n):
             province = province_codes[i]
-            if province in strong_vnpt_provinces:
-                prob = 0.85  # Higher VNPT penetration
+            if province in strong_telecom_provinces:
+                prob = 0.85  # Higher telecom penetration
             elif province in {"HCM", "DN", "CT"}:
                 prob = 0.70  # Major cities, competitive market
             else:
@@ -468,7 +468,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
                     "tien_mat": 0.40,
                     "bank_transfer": 0.20,
                     "vi_dien_tu": 0.25,
-                    "vnpt_pay": 0.10,
+                    "telecom_pay": 0.10,
                     "auto_debit": 0.03,
                     "credit_card": 0.02,
                 }
@@ -478,7 +478,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
                     "tien_mat": 0.15,
                     "bank_transfer": 0.25,
                     "vi_dien_tu": 0.20,
-                    "vnpt_pay": 0.15,
+                    "telecom_pay": 0.15,
                     "auto_debit": 0.18,
                     "credit_card": 0.07,
                 }
@@ -486,7 +486,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
             # Age adjustment (younger = more digital)
             if age < 35:
                 distribution["vi_dien_tu"] *= 1.5
-                distribution["vnpt_pay"] *= 1.3
+                distribution["telecom_pay"] *= 1.3
                 distribution["tien_mat"] *= 0.6
             elif age > 50:
                 distribution["tien_mat"] *= 1.5
@@ -848,7 +848,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
 
             # 4. Digital engagement score (0-15)
             payment_method = payment_method_codes[i]
-            digital_methods = {"vi_dien_tu", "vnpt_pay", "auto_debit", "credit_card"}
+            digital_methods = {"vi_dien_tu", "telecom_pay", "auto_debit", "credit_card"}
             if payment_method in digital_methods:
                 digital_score = 15
             elif payment_method == "bank_transfer":
@@ -920,8 +920,8 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
         cic_scores = merged['cic_score'].fillna(0).values
         max_dpd = merged['max_dpd_12m'].fillna(0).values
 
-        # Step 1: Determine VNPT customer status
-        is_customer = self._generate_is_vnpt_customer(n, province_codes)
+        # Step 1: Determine telecom customer status
+        is_customer = self._generate_is_telecom_customer(n, province_codes)
 
         # Step 2: Generate tenure
         tenure_months = self._generate_customer_tenure(is_customer, ages)
@@ -986,8 +986,8 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
         # Create DataFrame
         df = pd.DataFrame({
             'customer_id': customer_ids,
-            'is_vnpt_customer': is_customer,
-            'vnpt_customer_tenure_months': tenure_months,
+            'is_telecom_customer': is_customer,
+            'telecom_customer_tenure_months': tenure_months,
             'contract_type': contract_labels,
             'contract_type_code': contract_codes,
             'service_bundle': bundle_labels,
@@ -1024,41 +1024,41 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
         if data is None:
             return {"error": "No data available"}
 
-        vnpt_customers = data[data['is_vnpt_customer']]
+        telecom_customers = data[data['is_telecom_customer']]
 
         analysis = {
             "total_records": len(data),
-            "vnpt_customer_rate": float(data['is_vnpt_customer'].mean()),
+            "telecom_customer_rate": float(data['is_telecom_customer'].mean()),
             "telecom_credit_stats": {},
             "payment_behavior": {},
             "segment_analysis": {},
         }
 
-        if len(vnpt_customers) > 0:
+        if len(telecom_customers) > 0:
             # Telecom credit score stats
             analysis["telecom_credit_stats"] = {
-                "mean_score": float(vnpt_customers['telecom_credit_score'].mean()),
-                "median_score": float(vnpt_customers['telecom_credit_score'].median()),
-                "std_score": float(vnpt_customers['telecom_credit_score'].std()),
+                "mean_score": float(telecom_customers['telecom_credit_score'].mean()),
+                "median_score": float(telecom_customers['telecom_credit_score'].median()),
+                "std_score": float(telecom_customers['telecom_credit_score'].std()),
                 "score_distribution": {
-                    "excellent (80-100)": float((vnpt_customers['telecom_credit_score'] >= 80).mean()),
+                    "excellent (80-100)": float((telecom_customers['telecom_credit_score'] >= 80).mean()),
                     "good (60-80)": float((
-                        (vnpt_customers['telecom_credit_score'] >= 60) &
-                        (vnpt_customers['telecom_credit_score'] < 80)
+                        (telecom_customers['telecom_credit_score'] >= 60) &
+                        (telecom_customers['telecom_credit_score'] < 80)
                     ).mean()),
                     "fair (40-60)": float((
-                        (vnpt_customers['telecom_credit_score'] >= 40) &
-                        (vnpt_customers['telecom_credit_score'] < 60)
+                        (telecom_customers['telecom_credit_score'] >= 40) &
+                        (telecom_customers['telecom_credit_score'] < 60)
                     ).mean()),
-                    "poor (<40)": float((vnpt_customers['telecom_credit_score'] < 40).mean()),
+                    "poor (<40)": float((telecom_customers['telecom_credit_score'] < 40).mean()),
                 },
             }
 
             # Payment behavior analysis
-            postpaid = vnpt_customers[vnpt_customers['contract_type_code'] == 'tra_sau']
+            postpaid = telecom_customers[telecom_customers['contract_type_code'] == 'tra_sau']
             if len(postpaid) > 0:
                 analysis["payment_behavior"] = {
-                    "postpaid_rate": float((vnpt_customers['contract_type_code'] == 'tra_sau').mean()),
+                    "postpaid_rate": float((telecom_customers['contract_type_code'] == 'tra_sau').mean()),
                     "avg_on_time_rate": float(postpaid['on_time_payment_rate'].mean()),
                     "pct_perfect_payment": float((postpaid['on_time_payment_rate'] >= 0.95).mean()),
                     "avg_late_payments": float(postpaid['num_late_payments_telecom'].mean()),
@@ -1072,14 +1072,14 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
                     how='left'
                 )
                 thin_file = merged[~merged['has_credit_history'].fillna(False)]
-                thin_vnpt = thin_file[thin_file['is_vnpt_customer']]
+                thin_telecom = thin_file[thin_file['is_telecom_customer']]
 
-                if len(thin_vnpt) > 0:
+                if len(thin_telecom) > 0:
                     analysis["thin_file_alternative_credit"] = {
                         "thin_file_count": int(len(thin_file)),
-                        "thin_file_with_vnpt": int(len(thin_vnpt)),
-                        "coverage_rate": float(len(thin_vnpt) / len(thin_file)) if len(thin_file) > 0 else 0,
-                        "avg_telecom_score": float(thin_vnpt['telecom_credit_score'].mean()),
+                        "thin_file_with_telecom": int(len(thin_telecom)),
+                        "coverage_rate": float(len(thin_telecom) / len(thin_file)) if len(thin_file) > 0 else 0,
+                        "avg_telecom_score": float(thin_telecom['telecom_credit_score'].mean()),
                     }
 
         return analysis
@@ -1088,7 +1088,7 @@ class VNPTBehaviorGenerator(BaseDataGenerator, CorrelationMixin):
 # MODULE EXPORTS
 
 __all__ = [
-    "VNPTBehaviorGenerator",
+    "TelecomBehaviorGenerator",
     "ContractType",
     "ServiceBundle",
     "PaymentMethod",

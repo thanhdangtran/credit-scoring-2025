@@ -6,12 +6,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: vnpt-credit-scoring-api
+    container_name: credit-scoring-api
     ports:
       - "8000:8000"
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - MODEL_NAME=vnpt-credit-scoring
+      - MODEL_NAME=credit-scoring
       - LOG_LEVEL=INFO
     volumes:
       - ./models:/app/models
@@ -25,12 +25,12 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - vnpt-network
+      - credit-network
 
   # MLflow Tracking Server
   mlflow:
     image: python:3.10-slim
-    container_name: vnpt-mlflow-server
+    container_name: mlflow-server
     ports:
       - "5000:5000"
     environment:
@@ -47,15 +47,15 @@ services:
                --port 5000"
     restart: unless-stopped
     networks:
-      - vnpt-network
+      - credit-network
 
   # PostgreSQL Database (optional - for production)
   postgres:
     image: postgres:15-alpine
-    container_name: vnpt-postgres
+    container_name: postgres-db
     environment:
-      - POSTGRES_USER=vnpt
-      - POSTGRES_PASSWORD=vnpt_secret
+      - POSTGRES_USER=credituser
+      - POSTGRES_PASSWORD=credit_secret
       - POSTGRES_DB=credit_scoring
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -63,28 +63,28 @@ services:
       - "5432:5432"
     restart: unless-stopped
     networks:
-      - vnpt-network
+      - credit-network
     profiles:
       - production
 
   # Redis Cache (optional - for production)
   redis:
     image: redis:7-alpine
-    container_name: vnpt-redis
+    container_name: redis-cache
     ports:
       - "6379:6379"
     volumes:
       - redis-data:/data
     restart: unless-stopped
     networks:
-      - vnpt-network
+      - credit-network
     profiles:
       - production
 
   # Prometheus Metrics (optional - for monitoring)
   prometheus:
     image: prom/prometheus:latest
-    container_name: vnpt-prometheus
+    container_name: prometheus-monitor
     ports:
       - "9090:9090"
     volumes:
@@ -95,14 +95,14 @@ services:
       - '--storage.tsdb.path=/prometheus'
     restart: unless-stopped
     networks:
-      - vnpt-network
+      - credit-network
     profiles:
       - monitoring
 
   # Grafana Dashboard (optional - for monitoring)
   grafana:
     image: grafana/grafana:latest
-    container_name: vnpt-grafana
+    container_name: grafana-dashboard
     ports:
       - "3000:3000"
     environment:
@@ -114,7 +114,7 @@ services:
       - prometheus
     restart: unless-stopped
     networks:
-      - vnpt-network
+      - credit-network
     profiles:
       - monitoring
 
@@ -126,5 +126,5 @@ volumes:
   grafana-data:
 
 networks:
-  vnpt-network:
+  credit-network:
     driver: bridge

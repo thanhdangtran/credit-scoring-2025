@@ -129,7 +129,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
         velocity_features = self._create_velocity_features(grouped)
         features_list.append(velocity_features)
 
-        # E. VNPT Telecom Features
+        # E. Telecom Features
         if self.include_telecom:
             telecom_features = self._create_telecom_features(grouped, X)
             features_list.append(telecom_features)
@@ -467,7 +467,7 @@ class TimeSeriesFeatureEngineer(BaseEstimator, TransformerMixin):
 
         return acceleration.mean() if len(acceleration) > 0 else 0.0
 
-    # E. VNPT TELECOM FEATURES
+    # E. TELECOM FEATURES
 
     def _create_telecom_features(
         self,

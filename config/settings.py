@@ -261,7 +261,7 @@ class VietnameseMarketConfig:
 
 
 @dataclass
-class VNPTTelecomConfig:
+class TelecomConfig:
     # Contract type distribution
     contract_types: Dict[ContractType, float] = field(default_factory=lambda: {
         ContractType.TRA_TRUOC: 0.55,
@@ -590,7 +590,7 @@ class RegulatoryConfig:
 class SyntheticDataConfig:
     credit_scoring: CreditScoringConfig = field(default_factory=CreditScoringConfig)
     vietnamese_market: VietnameseMarketConfig = field(default_factory=VietnameseMarketConfig)
-    vnpt_telecom: VNPTTelecomConfig = field(default_factory=VNPTTelecomConfig)
+    telecom: TelecomConfig = field(default_factory=TelecomConfig)
     time_series: TimeSeriesConfig = field(default_factory=TimeSeriesConfig)
     mnar: MNARConfig = field(default_factory=MNARConfig)
     regulatory: RegulatoryConfig = field(default_factory=RegulatoryConfig)
@@ -605,7 +605,7 @@ class SyntheticDataConfig:
         return cls(
             credit_scoring=CreditScoringConfig(**config_dict.get("credit_scoring", {})),
             vietnamese_market=VietnameseMarketConfig(**config_dict.get("vietnamese_market", {})),
-            vnpt_telecom=VNPTTelecomConfig(**config_dict.get("vnpt_telecom", {})),
+            telecom=TelecomConfig(**config_dict.get("telecom", {})),
             time_series=TimeSeriesConfig(**config_dict.get("time_series", {})),
             mnar=MNARConfig(**config_dict.get("mnar", {})),
             regulatory=RegulatoryConfig(**config_dict.get("regulatory", {})),
@@ -671,7 +671,7 @@ __all__ = [
     "CreditScoringConfig",
     "IncomeRange",
     "VietnameseMarketConfig",
-    "VNPTTelecomConfig",
+    "TelecomConfig",
     "TimeSeriesConfig",
     "MNARConfig",
     "NHNNCircularRequirement",

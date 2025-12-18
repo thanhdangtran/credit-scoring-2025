@@ -26,8 +26,8 @@ class CustomerFeatures(BaseModel):
     credit_utilization: Optional[float] = Field(None, ge=0, le=1, description="Credit utilization ratio")
     max_dpd_12m: Optional[int] = Field(None, ge=0, description="Max days past due in 12 months")
 
-    # Telecom features (VNPT)
-    vnpt_tenure_months: Optional[int] = Field(None, ge=0, description="VNPT tenure in months")
+    # Telecom features
+    telecom_tenure_months: Optional[int] = Field(None, ge=0, description="Telecom tenure in months")
     arpu: Optional[float] = Field(None, ge=0, description="Average revenue per user")
     payment_rate: Optional[float] = Field(None, ge=0, le=1, description="Payment rate")
 

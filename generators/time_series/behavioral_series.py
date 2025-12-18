@@ -73,7 +73,7 @@ class CustomerBehaviorProfile:
     credit_limit: float
     cic_score: int
     has_credit_history: bool
-    is_vnpt_customer: bool
+    is_telecom_customer: bool
     monthly_arpu: float
     contract_type: str
     is_risky: bool = False
@@ -398,8 +398,8 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
         n = self.n_months
         month_ids = [mid for _, _, mid in self.months]
 
-        if not profile.is_vnpt_customer or profile.monthly_arpu <= 0:
-            # Not VNPT customer - return empty series
+        if not profile.is_telecom_customer or profile.monthly_arpu <= 0:
+            # Not telecom customer - return empty series
             return pd.DataFrame({
                 'customer_id': [profile.customer_id] * n,
                 'month_id': month_ids,
@@ -440,10 +440,10 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
 
         # Payment method probabilities
         if profile.contract_type == "tra_sau":
-            method_options = ["bank_transfer", "vi_dien_tu", "auto_debit", "tien_mat", "vnpt_pay"]
+            method_options = ["bank_transfer", "vi_dien_tu", "auto_debit", "tien_mat", "telecom_pay"]
             method_probs = [0.25, 0.25, 0.20, 0.15, 0.15]
         else:
-            method_options = ["tien_mat", "vi_dien_tu", "bank_transfer", "vnpt_pay"]
+            method_options = ["tien_mat", "vi_dien_tu", "bank_transfer", "telecom_pay"]
             method_probs = [0.35, 0.30, 0.20, 0.15]
 
         for i in range(n):
@@ -720,11 +720,11 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
 
         # Add telecom data
         if telecom_df is not None:
-            telecom_cols = ['customer_id', 'is_vnpt_customer', 'monthly_arpu', 'contract_type_code']
+            telecom_cols = ['customer_id', 'is_telecom_customer', 'monthly_arpu', 'contract_type_code']
             available_cols = [c for c in telecom_cols if c in telecom_df.columns]
             merged = merged.merge(telecom_df[available_cols], on='customer_id', how='left')
         else:
-            merged['is_vnpt_customer'] = False
+            merged['is_telecom_customer'] = False
             merged['monthly_arpu'] = 0
             merged['contract_type_code'] = 'none'
 
@@ -732,7 +732,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
         merged['has_credit_history'] = merged['has_credit_history'].fillna(False)
         merged['cic_score'] = merged['cic_score'].fillna(0)
         merged['total_credit_limit'] = merged['total_credit_limit'].fillna(0)
-        merged['is_vnpt_customer'] = merged['is_vnpt_customer'].fillna(False)
+        merged['is_telecom_customer'] = merged['is_telecom_customer'].fillna(False)
         merged['monthly_arpu'] = merged['monthly_arpu'].fillna(0)
         merged['contract_type_code'] = merged['contract_type_code'].fillna('none')
 
@@ -752,7 +752,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
                 credit_limit=row['total_credit_limit'],
                 cic_score=int(row['cic_score']),
                 has_credit_history=bool(row['has_credit_history']),
-                is_vnpt_customer=bool(row['is_vnpt_customer']),
+                is_telecom_customer=bool(row['is_telecom_customer']),
                 monthly_arpu=row['monthly_arpu'],
                 contract_type=row['contract_type_code'],
             )
@@ -786,7 +786,7 @@ class BehavioralSeriesGenerator(BaseDataGenerator, CorrelationMixin, TimeSeriesM
                 credit_limit=row['total_credit_limit'],
                 cic_score=int(row['cic_score']),
                 has_credit_history=bool(row['has_credit_history']),
-                is_vnpt_customer=bool(row['is_vnpt_customer']),
+                is_telecom_customer=bool(row['is_telecom_customer']),
                 monthly_arpu=row['monthly_arpu'],
                 contract_type=row['contract_type_code'],
             )

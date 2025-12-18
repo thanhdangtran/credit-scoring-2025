@@ -7,7 +7,7 @@ import pandas as pd
 from numpy.random import Generator
 
 import sys
-sys.path.insert(0, '/home/thanhdang/Desktop/vnpt-ai')
+sys.path.insert(0, '/home/thanhdang/Desktop/credit-scoring-ai')
 
 from config.settings import SyntheticDataConfig, Region
 from generators.base import (

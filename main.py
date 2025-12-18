@@ -30,7 +30,7 @@ from generators import (
     DemographicGenerator,
     FinancialGenerator,
     CreditHistoryGenerator,
-    VNPTBehaviorGenerator,
+    TelecomBehaviorGenerator,
     # Time series generators
     TransactionSeriesGenerator,
     BehavioralSeriesGenerator,
@@ -203,7 +203,7 @@ class SyntheticDataPipeline:
         self.demo_gen = DemographicGenerator(self.synth_config, seed=seed)
         self.fin_gen = FinancialGenerator(self.synth_config, seed=seed)
         self.credit_gen = CreditHistoryGenerator(self.synth_config, seed=seed)
-        self.telecom_gen = VNPTBehaviorGenerator(self.synth_config, seed=seed)
+        self.telecom_gen = TelecomBehaviorGenerator(self.synth_config, seed=seed)
 
         # Time series generators
         self.transaction_gen = TransactionSeriesGenerator(
@@ -288,7 +288,7 @@ class SyntheticDataPipeline:
         demographic_df: pd.DataFrame,
         financial_df: pd.DataFrame
     ) -> pd.DataFrame:
-        self.logger.info("Stage 4/7: Generating VNPT telecom data...")
+        self.logger.info("Stage 4/7: Generating telecom data...")
         start = time.time()
 
         df = self.telecom_gen.generate(
@@ -297,10 +297,10 @@ class SyntheticDataPipeline:
         )
 
         elapsed = time.time() - start
-        vnpt_pct = df['is_vnpt_customer'].mean() * 100
+        telecom_pct = df['is_telecom_customer'].mean() * 100
         self.logger.info(
             f"  Generated {len(df)} telecom records in {elapsed:.2f}s "
-            f"({vnpt_pct:.1f}% VNPT customers)"
+            f"({telecom_pct:.1f}% telecom customers)"
         )
 
         return df
@@ -579,7 +579,7 @@ class SyntheticDataPipeline:
                 "avg_cic_score": float(credit_df[credit_df['cic_score'] > 0]['cic_score'].mean()) if (credit_df['cic_score'] > 0).any() else None,
             },
             "telecom_stats": {
-                "vnpt_customer_pct": float(telecom_df['is_vnpt_customer'].mean()) * 100,
+                "telecom_customer_pct": float(telecom_df['is_telecom_customer'].mean()) * 100,
                 "avg_arpu": float(telecom_df[telecom_df['monthly_arpu'] > 0]['monthly_arpu'].mean()) if (telecom_df['monthly_arpu'] > 0).any() else None,
             },
             "label_stats": {
@@ -696,7 +696,7 @@ class SyntheticDataPipeline:
             print(f"  Avg CIC score: {s['credit_stats']['avg_cic_score']:.0f}")
 
         print(f"\nTelecom Stats:")
-        print(f"  VNPT customers: {s['telecom_stats']['vnpt_customer_pct']:.1f}%")
+        print(f"  Telecom customers: {s['telecom_stats']['telecom_customer_pct']:.1f}%")
 
         print(f"\nLabel Stats:")
         print(f"  Default rate: {s['label_stats']['default_rate']:.2f}%")

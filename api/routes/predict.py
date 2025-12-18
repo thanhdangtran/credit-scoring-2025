@@ -34,7 +34,7 @@ def load_model(model_path: Optional[str] = None):
     try:
         # Try loading from MLflow registry first
         mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
-        model_name = os.getenv("MODEL_NAME", "vnpt-credit-scoring")
+        model_name = os.getenv("MODEL_NAME", "credit-scoring")
 
         if mlflow_uri:
             try:
